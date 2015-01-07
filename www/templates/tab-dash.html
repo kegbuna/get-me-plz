@@ -1,0 +1,41 @@
+<ion-view view-title="Dashboard">
+  <ion-content class="padding">
+    <div>
+
+    </div>
+    <div class="list card">
+
+      <div class="item item-divider">Go This Way</div>
+      <div class="item item-body">
+        <div>
+          <p>Your Heading is {{userHeading.magneticHeading}}</p>
+          <p>Bar is = {{barDirection}}</p>
+          <p>You need to go = {{goThisWay}}</p>
+        </div>
+      </div>
+      <div class="item item-divider">Bar List</div>
+      <div class="item item-body">
+        <div>
+          <div id="bar-map"></div>
+          <div ng-if="nearbyBars.length" ng-repeat="bar in nearbyBars">
+            <p><b>{{bar.name}}</b> {{bar.geometry}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="item item-divider">Geo Information</div>
+      <div class="item item-body">
+        <div>
+          <p>Last Update: {{humanDate(geoInfo.timestamp)}}</p>
+          <p>Latitude: {{geoInfo.coords.latitude}}</p>
+          <p>Longitude: {{geoInfo.coords.longitude}}</p>
+          <p>Accuracy: {{geoInfo.coords.accuracy}}</p>
+        </div>
+        <div>
+          <button ng-click="updatePosition()" class="button">Manual Update</button>
+          <button ng-click="startGPSWatcher()" class="button">Start Watcher</button>
+          <button ng-click="clearGPSWatcher()" class="button">Clear Watcher</button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
