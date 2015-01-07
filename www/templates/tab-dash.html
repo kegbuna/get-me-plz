@@ -10,7 +10,13 @@
         <div>
           <p>Your Heading is {{userHeading.magneticHeading}}</p>
           <p>Bar is = {{barDirection}}</p>
+          <p>Bar Name = {{nearbyBars[0].name}}</p>
           <p>You need to go = {{goThisWay}}</p>
+          <p>x: {{compass.x2}}  -  y: {{compass.y2}}</p>
+          <svg>
+            <circle r="100" cx="150" cy="150" stroke-width="10" stroke="#000" ></circle>
+            <line x1="150" y1="150" x2="{{compass.x2}}" y2="{{compass.y2}}" stroke-width="10" stroke-linecap="round" stroke="#fff"></line>
+          </svg>
         </div>
       </div>
       <div class="item item-divider">Bar List</div>
@@ -32,8 +38,10 @@
         </div>
         <div>
           <button ng-click="updatePosition()" class="button">Manual Update</button>
-          <button ng-click="startGPSWatcher()" class="button">Start Watcher</button>
-          <button ng-click="clearGPSWatcher()" class="button">Clear Watcher</button>
+          <button ng-click="startGPSWatcher()" class="button">Start GPS Watcher</button>
+          <button ng-click="clearGPSWatcher()" class="button">Clear GPS Watcher</button>
+          <button ng-click="startCompassWatcher()" class="button">Start Compass Watcher</button>
+          <button ng-click="clearCompassWatcher()" class="button">Clear Compass Watcher</button>
         </div>
       </div>
     </div>

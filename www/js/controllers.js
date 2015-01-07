@@ -18,6 +18,10 @@ angular.module('starter.controllers', [])
             enableHighAcuracy: true,
             maximumAge: 3000
         };
+        $scope.compass = {
+            x2: 0,
+            y2: 0
+        };
 
         //convert a timestamp to human readable format
         $scope.humanDate = function (timestamp)
@@ -108,15 +112,32 @@ angular.module('starter.controllers', [])
                 //console.log(JSON.stringify(heading));
                 $scope.goThisWay = degreeDifference($scope.userHeading.magneticHeading, $scope.barDirection);
 
+                //TODO:: This diameter shouldn't be hardcoded
+                $scope.compass = resolveToPoint($scope.goThisWay, 200);
+
                 $scope.$apply();
+
                 function degreeDifference(deg1, deg2)
                 {
                     return (360 - deg1 + deg2 > 360) ? deg2-deg1 : 360 - deg1 + deg2;
+                }
+                //http://stackoverflow.com/questions/8796690/algorithm-function-to-resolve-degrees-to-x-y-for-drawing-svg-pie-graphs
+                function resolveToPoint(deg, diameter)
+                {
+                    deg = (deg - 90 < 0) ? deg + 270: deg - 90;
+                    var rad = Math.PI * deg / 180;
+                    var r = diameter / 2;
+                    return {x2: r * Math.cos(rad) + 150, y2: r * Math.sin(rad) + 150};
                 }
             },$scope.onGeoError,
             {
 
             });
+        };
+        $scope.clearCompassWatcher = function()
+        {
+            navigator.compass.clearWatch($scope.compassWatchID);
+            console.log("COMPASS WATCH CLEARED");
         };
         //start watching position
         $scope.startGPSWatcher = function()
@@ -136,7 +157,7 @@ angular.module('starter.controllers', [])
         $scope.clearGPSWatcher = function()
         {
             navigator.geolocation.clearWatch($scope.GPSWatchID);
-            console.log("WATCH CLEARED");
+            console.log("GPS WATCH CLEARED");
         };
 
         //When the platform is ready, let's get busy
